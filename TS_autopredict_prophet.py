@@ -18,7 +18,6 @@ table.loc[:, (["NewUsers","ReturnUsers"], 10)]
 #.loc[:, (slice(None), ('11', '353'))]
 #.iloc[:,1]
 
-
 df = pd.read_csv('svod_tot.csv').sort_values(by='ds',ascending=True,kind='mergesort')
 df['y'] = np.log(df['old_users'].replace(0, np.NaN))
 #df['y'] = np.log(df['new_users'])
@@ -47,7 +46,6 @@ holy = pd.concat((basic_holy, short_holy))
 df
 
 df_plot.corr(method= 'pearson')
-
 
 #df['cap'] = 0
 m = Prophet(holidays=basic_holy).fit(df)
@@ -83,10 +81,8 @@ m.plot(fcst);'''
 future = m.make_future_dataframe(periods=365,freq='D')
 future.tail()
 
-
 forecast = m.predict(future)
 m.plot(forecast);
-
 
 from math import exp
 forecast = m.predict(future)
@@ -98,9 +94,7 @@ yy.tail(367)
 
 m.plot_components(forecast);
 
-
 yy.plot(figsize=(15,6));
-
 
 df2 = pd.read_csv('svod_tot.csv').sort_values(by='ds',ascending=True,kind='mergesort')
 df2['y'] = np.log(df2['new_users'].replace(0, np.NaN))
@@ -132,7 +126,6 @@ future1 = mm.make_future_dataframe(periods=365,freq='D')
 forecast1 = mm.predict(future1)
 mm.plot(forecast1);
 
-
 yyy=forecast1[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
 yyy['yhat'] = np.exp(yyy['yhat'])
 yyy['yhat_lower'] = np.exp(yyy['yhat_lower'])
@@ -143,12 +136,6 @@ yyy.tail(367)
 add=yy.join(yyy, lsuffix='_old',rsuffix='_new', how='outer')
 add
 
-
-
-
 add.plot(figsize=(15,6));
-
-
-
 
 mm.plot_components(forecast1);
